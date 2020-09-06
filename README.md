@@ -1,5 +1,5 @@
-# volto-addon-template
-[![Releases](https://img.shields.io/github/v/release/eea/volto-addon-template)](https://github.com/eea/volto-addon-template/releases)
+# volto-blocks-form
+[![Releases](https://img.shields.io/github/v/release/eea/volto-blocks-form)](https://github.com/eea/volto-blocks-form/releases)
 
 [Volto](https://github.com/plone/volto) add-on
 
@@ -21,11 +21,11 @@ Demo GIF
 1. Update `package.json`:
     ``` JSON
     "addons": [
-        "@eeacms/volto-addon-template"
+        "@eeacms/volto-blocks-form"
     ],
 
     "dependencies": {
-        "@eeacms/volto-addon-template": "github:eea/volto-addon-template#0.1.0"
+        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.1.0"
     }
     ```
 
