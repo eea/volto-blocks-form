@@ -3,6 +3,8 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import ColumnsBlockView from './ColumnsBlockView';
 import ColumnsBlockEdit from './ColumnsBlockEdit';
 
+import NumberWidget from './NumberWidget';
+
 export default function install(config) {
   config.blocks.blocksConfig.demoColumns = {
     id: 'demoColumns',
@@ -21,5 +23,6 @@ export default function install(config) {
     },
   };
 
+  config.widgets.type.number = NumberWidget;
   return config;
 }
