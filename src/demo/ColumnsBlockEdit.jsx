@@ -6,6 +6,8 @@ import { ColumnsBlockSchema } from './schema';
 import BlocksForm from '../components/BlocksForm';
 import { RecoilRoot } from 'recoil';
 
+import './styles.less';
+
 const empty = () => {
   const id = uuid();
   return {
@@ -30,14 +32,16 @@ const ColumnsBlockEdit = (props) => {
     <>
       <RecoilRoot>
         <div className="columns-demo-block">
+          <h3>{data.title}</h3>
           {getColumns(coldata).map(([id, column]) => {
             return (
-              <BlocksForm
-                key={id}
-                formData={column}
-                formId={id}
-                onChangeField={onChangeField}
-              />
+              <div className="demo-column" key={id}>
+                <BlocksForm
+                  formData={column}
+                  formId={id}
+                  onChangeField={onChangeField}
+                />
+              </div>
             );
           })}
         </div>

@@ -99,7 +99,7 @@ const DragDropForm = (props) => {
             style={{ position: 'relative' }}
           >
             {blockList.map(([blockId, block], index) => (
-              <Draggable draggableId={block} index={index} key={block}>
+              <Draggable draggableId={blockId} index={index} key={blockId}>
                 {(provided) => (
                   <EditBlockWrapper
                     block={block}

@@ -149,7 +149,7 @@ export function nextBlockId(formData, currentBlock) {
 }
 
 export function previousBlockId(formData, currentBlock) {
-  const blocksLayoutFieldname = getBlocksLayoutFieldname(this.state.formData);
+  const blocksLayoutFieldname = getBlocksLayoutFieldname(formData);
   const currentIndex = formData[blocksLayoutFieldname].items.indexOf(
     currentBlock,
   );
