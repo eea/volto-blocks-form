@@ -1,12 +1,6 @@
 import React from 'react';
 import { EditBlock } from '@plone/volto/components';
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { useRecoilState } from 'recoil';
 import { getBlocks } from '@plone/volto/helpers';
 import DragDropForm from './DragDropForm';
 import {
@@ -19,10 +13,11 @@ import {
   previousBlockId,
 } from '../utils';
 import { settings } from '~/config';
+import { formStateFamily } from '../state';
 
 const BlocksForm = (props) => {
-  const { pathname, onChangeField } = props;
-  const [formData, setState] = React.useState({});
+  const { pathname, formId, onChangeField } = props;
+  const [formData, setFormData] = useRecoilState(formStateFamily(formId));
   const [selected, setSelected] = React.useState(props.selected);
   const blockList = getBlocks(formData);
 
@@ -71,33 +66,29 @@ const BlocksForm = (props) => {
 
   const onMutateBlock = (id, value) => {
     const newFormData = mutateBlock(formData, id, value);
-    setState({ formData: newFormData });
+    setFormData(newFormData);
   };
 
-  const onAddBlock = React.useCallbac((formData, type, index) => {
+  const onAddBlock = (type, index) => {
     const [id, newFormData] = addBlock(formData, type, index);
     setSelected(id);
-    setState({ formData: newFormData });
-  }, []);
+    setFormData(newFormData);
+  };
 
   const onChangeBlock = (id, value) => {
     const newFormData = changeBlock(formData, id, value);
-    setState({ formData: newFormData });
+    setFormData(newFormData);
   };
 
   const onDeleteBlock = (id, selectPrev) => {
     const previous = previousBlockId(formData, id);
 
-    setState({
-      formData: deleteBlock(formData),
-    });
+    setFormData(deleteBlock(formData));
     setSelected(selectPrev ? previous : null);
   };
 
   const onMoveBlock = (dragIndex, hoverIndex) => {
-    this.setState({
-      formData: moveBlock(formData, dragIndex, hoverIndex),
-    });
+    setFormData(moveBlock(formData, dragIndex, hoverIndex));
   };
 
   return (
@@ -110,9 +101,7 @@ const BlocksForm = (props) => {
           if (!destination) {
             return;
           }
-          setState({
-            formData: moveBlock(formData, source.index, destination.index),
-          });
+          setFormData(moveBlock(formData, source.index, destination.index));
           return true;
         }}
         renderBlock={(block, index) => (
