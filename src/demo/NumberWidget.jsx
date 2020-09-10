@@ -23,6 +23,7 @@ const NumberWidget = ({
   onChange,
   fieldSet,
   wrapped,
+  defaultValue = 0,
 }) => (
   <FormFieldWrapper
     id={id}
@@ -37,7 +38,7 @@ const NumberWidget = ({
       id={`field-${id}`}
       name={id}
       type="number"
-      value={value || ''}
+      value={value || defaultValue}
       onChange={({ target }) =>
         onChange(id, target.value === '' ? undefined : target.value)
       }

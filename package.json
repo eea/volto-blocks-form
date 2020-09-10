@@ -12,5 +12,8 @@
   "scripts": {
     "release": "release-it",
     "bootstrap": "./bootstrap"
+  },
+  "dependencies": {
+    "recoil": "0.0.10"
   }
 }

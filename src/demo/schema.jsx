@@ -4,7 +4,7 @@ export const ColumnsBlockSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['title', 'columns'],
+      fields: ['title', 'nrColumns'],
     },
   ],
   properties: {
@@ -12,10 +12,10 @@ export const ColumnsBlockSchema = {
       title: 'Block title',
       default: 'Columns demo',
     },
-    columns: {
+    nrColumns: {
       title: 'Number of columns',
-      default: 2,
       type: 'number',
+      defaultValue: 2,
     },
   },
   required: ['title'],
