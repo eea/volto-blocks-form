@@ -107,7 +107,7 @@ const DragDropForm = (props) => {
                     provided={provided}
                     selected={selected === blockId}
                   >
-                    {renderBlock(block, index)}
+                    {renderBlock(block, blockId, index)}
                   </EditBlockWrapper>
                 )}
               </Draggable>

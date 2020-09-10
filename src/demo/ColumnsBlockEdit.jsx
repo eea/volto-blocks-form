@@ -26,7 +26,14 @@ const getColumns = (coldata) => {
 };
 
 const ColumnsBlockEdit = (props) => {
-  const { selected, block, data, onChangeBlock, onChangeField } = props;
+  const {
+    selected,
+    block,
+    data,
+    onChangeBlock,
+    onChangeField,
+    pathname,
+  } = props;
   const { coldata = empty() } = data;
   return (
     <>
@@ -40,6 +47,7 @@ const ColumnsBlockEdit = (props) => {
                   formData={column}
                   formId={id}
                   onChangeField={onChangeField}
+                  pathname={pathname}
                 />
               </div>
             );

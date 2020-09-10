@@ -16,6 +16,7 @@ import { settings } from '~/config';
 import { formStateFamily } from '../state';
 
 const BlocksForm = (props) => {
+  console.log('blocksForm', props);
   const { pathname, formId, onChangeField } = props;
   const [formData, setFormData] = useRecoilState(formStateFamily(formId));
   const [selected, setSelected] = React.useState(props.selected);
@@ -93,7 +94,6 @@ const BlocksForm = (props) => {
 
   return (
     <div className="ui container">
-      <div>Empty column</div>
       <DragDropForm
         blockList={blockList}
         onMoveItem={(result) => {
@@ -104,14 +104,14 @@ const BlocksForm = (props) => {
           setFormData(moveBlock(formData, source.index, destination.index));
           return true;
         }}
-        renderBlock={(block, index) => (
+        renderBlock={(block, blockId, index) => (
           <EditBlock
-            block={block}
+            block={blockId}
             data={block}
             handleKeyDown={handleKeyDown}
-            id={block}
+            id={blockId}
             index={index}
-            key={block}
+            key={blockId}
             onAddBlock={onAddBlock}
             onChangeBlock={onChangeBlock}
             onChangeField={onChangeField}
@@ -123,7 +123,7 @@ const BlocksForm = (props) => {
             onSelectBlock={(id) => setSelected(id)}
             pathname={pathname}
             properties={formData}
-            selected={selected === block}
+            selected={selected === blockId}
             type={block['@type']}
           />
         )}
