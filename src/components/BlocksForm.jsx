@@ -7,11 +7,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import {
-  getBlocks,
-  // getBlocksFieldname,
-  // getBlocksLayoutFieldname,
-} from '@plone/volto/helpers';
+import { getBlocks } from '@plone/volto/helpers';
 import DragDropForm from './DragDropForm';
 import {
   addBlock,
@@ -29,7 +25,6 @@ const BlocksForm = (props) => {
   const [formData, setState] = React.useState({});
   const [selected, setSelected] = React.useState(props.selected);
   const blockList = getBlocks(formData);
-  // const blocksLayoutFieldname = getBlocksLayoutFieldname(formData);
 
   const handleKeyDown = (
     e,
@@ -89,17 +84,6 @@ const BlocksForm = (props) => {
     const newFormData = changeBlock(formData, id, value);
     setState({ formData: newFormData });
   };
-
-  // TODO: get it as prop
-  // const onChangeField = React.useCallback((id, value) => {
-  //   setState({
-  //     formData: {
-  //       ...formData,
-  //       // We need to catch also when the value equals false this fixes #888
-  //       [id]: value || (value !== undefined && isBoolean(value)) ? value : null,
-  //     },
-  //   });
-  // }, []);
 
   const onDeleteBlock = (id, selectPrev) => {
     const previous = previousBlockId(formData, id);

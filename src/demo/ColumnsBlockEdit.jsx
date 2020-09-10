@@ -1,21 +1,44 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import { SidebarPortal } from '@plone/volto/components';
 import { ColumnsBlockSchema } from './schema';
 import BlocksForm from '../components/BlocksForm';
 import { RecoilRoot } from 'recoil';
 
+const empty = () => {
+  const id = uuid();
+  return {
+    columns: { [id]: {} },
+    columns_layout: {
+      items: [id],
+    },
+  };
+};
+
+const getColumns = (coldata) => {
+  return (coldata?.columns_layout?.items || []).map((id) => [
+    id,
+    coldata.columns?.[id],
+  ]);
+};
+
 const ColumnsBlockEdit = (props) => {
-  const { selected, block, data, onChangeBlock } = props;
-  const { columns = 2 } = data;
-  const cols = [...Array(columns)];
+  const { selected, block, data, onChangeBlock, onChangeField } = props;
+  const { coldata = empty() } = data;
   return (
     <>
       <RecoilRoot>
-        {/* <ColumnsBlockView {...props} /> */}
         <div className="columns-demo-block">
-          {cols.map((id) => {
-            return <BlocksForm key={id} />;
+          {getColumns(coldata).map(([id, column]) => {
+            return (
+              <BlocksForm
+                key={id}
+                formData={column}
+                formId={id}
+                onChangeField={onChangeField}
+              />
+            );
           })}
         </div>
         <SidebarPortal selected={selected}>
@@ -37,15 +60,3 @@ const ColumnsBlockEdit = (props) => {
 };
 
 export default ColumnsBlockEdit;
-
-// import ColumnsBlockView from './ColumnsBlockView';
-// import { v4 as uuid } from 'uuid';
-// const emptyColumns = () => {
-//   const uid = uuid();
-//   return {
-//     columns: { uid: {} },
-//     columns_layout: {
-//       items: [uid],
-//     },
-//   };
-// };

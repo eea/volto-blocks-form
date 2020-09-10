@@ -1,26 +1,12 @@
 import { v4 as uuid } from 'uuid';
-import { settings } from '~/config';
-import {
-  findIndex,
-  isEmpty,
-  keys,
-  map,
-  mapValues,
-  omit,
-  pickBy,
-  uniq,
-  without,
-  move,
-  isBoolean,
-} from 'lodash';
-// import isBoolean from 'lodash/isBoolean';
-// import move from 'lodash-move';
+import { omit, without } from 'lodash';
+import move from 'lodash-move';
 import {
   getBlocksFieldname,
   getBlocksLayoutFieldname,
-  difference,
   blockHasValue,
 } from '@plone/volto/helpers';
+import { settings } from '~/config';
 
 export function emptyForm() {
   const id = uuid();
