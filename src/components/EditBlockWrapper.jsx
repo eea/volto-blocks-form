@@ -1,7 +1,8 @@
-import { Icon } from '@plone/volto/components';
-import dragSVG from '@plone/volto/icons/drag.svg';
 import React from 'react';
+import { Icon } from '@plone/volto/components';
 import { blockHasValue } from '@plone/volto/helpers';
+
+import dragSVG from '@plone/volto/icons/drag.svg';
 
 const EditBlockWrapper = (props) => {
   const { provided, block, selected, children } = props;
