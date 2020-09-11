@@ -88,7 +88,7 @@ const BlocksForm = (props) => {
   const onDeleteBlock = (id, selectPrev) => {
     const previous = previousBlockId(properties, id);
 
-    setFormData(formId, deleteBlock(properties));
+    setFormData(formId, deleteBlock(properties, id));
 
     setState({ ...state, selected: selectPrev ? previous : null });
   };

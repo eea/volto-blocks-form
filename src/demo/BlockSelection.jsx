@@ -15,7 +15,7 @@ const BlockSelection = (props) => {
       // TODO: optimize so that we only set to null when needed
       // Right now there's an extra set to null before it's properly set by the
       // form
-      setFormStates({ selected: null });
+      // setFormStates({ selected: null });
     },
     [setFormStates],
   );
@@ -43,7 +43,7 @@ const BlockSelection = (props) => {
     <div ref={blockNode}>
       <ul>
         {(formStates || []).map((s) => (
-          <li>{JSON.stringify(s)}</li>
+          <li key={s}>{JSON.stringify(s)}</li>
         ))}
       </ul>
       {children}
