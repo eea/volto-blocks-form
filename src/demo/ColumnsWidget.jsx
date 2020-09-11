@@ -1,10 +1,13 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { omit, without } from 'lodash';
 import move from 'lodash-move';
 import DragDropList from '../components/DragDropList';
 import { Icon, FormFieldWrapper } from '@plone/volto/components';
 import dragSVG from '@plone/volto/icons/drag.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
 import plusSVG from '@plone/volto/icons/circle-plus.svg';
+import { emptyForm } from '../utils';
 
 export function moveColumn(formData, source, destination) {
   return {
@@ -15,8 +18,11 @@ export function moveColumn(formData, source, destination) {
   };
 }
 
+const empty = () => {
+  return [uuid(), emptyForm()];
+};
+
 const ColumnsWidget = (props) => {
-  console.log(props);
   const { value = {}, id, onChange } = props;
   const { columns = {} } = value;
   const columnsList = (value.columns_layout.items || []).map((id) => [
@@ -62,7 +68,18 @@ const ColumnsWidget = (props) => {
                   <div className="label">Column {index}</div>
                   <button
                     onClick={() => {
-                      console.log('click');
+                      const newFormData = {
+                        ...value,
+                        columns: omit({ ...value.columns }, [childId]),
+                        columns_layout: {
+                          ...value.columns_layout,
+                          items: without(
+                            [...value.columns_layout?.items],
+                            childId,
+                          ),
+                        },
+                      };
+                      onChange(id, newFormData);
                     }}
                   >
                     <Icon name={trashSVG} size="18px" />
@@ -74,7 +91,18 @@ const ColumnsWidget = (props) => {
         />
         <button
           onClick={() => {
-            console.log('click');
+            const [newId, newData] = empty();
+            onChange(id, {
+              ...value,
+              columns: {
+                ...value.columns,
+                [newId]: newData,
+              },
+              columns_layout: {
+                ...value.columns_layout,
+                items: [...value.columns_layout?.items, newId],
+              },
+            });
           }}
         >
           <Icon name={plusSVG} size="18px" />

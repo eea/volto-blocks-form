@@ -49,40 +49,42 @@ const ColumnsBlockEdit = (props) => {
         >
           <div className="columns-demo-block">
             <h3>{data.block_title}</h3>
-            {getColumns(coldata).map(([id, column], index) => {
-              return (
-                <div
-                  role="presentation"
-                  className="demo-column"
-                  onClick={(evt) => {
-                    // console.log('click');
-                    // evt.preventDefault();
-                    // evt.stopPropagation();
-                  }}
-                  key={id}
-                >
-                  <h4>{`Column ${index}`}</h4>
-                  <BlocksForm
-                    properties={isEmpty(column) ? emptyForm() : column}
-                    setFormData={(id, value) => {
-                      onChangeBlock(block, {
-                        ...data,
-                        coldata: {
-                          ...coldata,
-                          columns: {
-                            ...coldata.columns,
-                            [id]: value,
-                          },
-                        },
-                      });
+            <div className="inner">
+              {getColumns(coldata).map(([id, column], index) => {
+                return (
+                  <div
+                    role="presentation"
+                    className="demo-column"
+                    onClick={(evt) => {
+                      // console.log('click');
+                      // evt.preventDefault();
+                      // evt.stopPropagation();
                     }}
-                    formId={id}
-                    onChangeField={onChangeField}
-                    pathname={pathname}
-                  />
-                </div>
-              );
-            })}
+                    key={id}
+                  >
+                    <h4>{`Column ${index}`}</h4>
+                    <BlocksForm
+                      properties={isEmpty(column) ? emptyForm() : column}
+                      setFormData={(id, value) => {
+                        onChangeBlock(block, {
+                          ...data,
+                          coldata: {
+                            ...coldata,
+                            columns: {
+                              ...coldata.columns,
+                              [id]: value,
+                            },
+                          },
+                        });
+                      }}
+                      formId={id}
+                      onChangeField={onChangeField}
+                      pathname={pathname}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </BlockSelection>
         <SidebarPortal selected={selected}>

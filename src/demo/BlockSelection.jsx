@@ -2,6 +2,8 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { formStateQuery } from '../state'; // , formStateSelectorFamily
 
+const DEBUG = false;
+
 const BlockSelection = (props) => {
   const { children, block, columns, selected } = props;
   const blockNode = React.useRef(null);
@@ -15,7 +17,7 @@ const BlockSelection = (props) => {
       // TODO: optimize so that we only set to null when needed
       // Right now there's an extra set to null before it's properly set by the
       // form
-      // setFormStates({ selected: null });
+      setFormStates({ selected: null });
     },
     [setFormStates],
   );
@@ -41,11 +43,15 @@ const BlockSelection = (props) => {
 
   return (
     <div ref={blockNode}>
-      <ul>
-        {(formStates || []).map((s) => (
-          <li key={s}>{JSON.stringify(s)}</li>
-        ))}
-      </ul>
+      {DEBUG ? (
+        <ul>
+          {(formStates || []).map((s, i) => (
+            <li key={i}>{JSON.stringify(s)}</li>
+          ))}
+        </ul>
+      ) : (
+        ''
+      )}
       {children}
     </div>
   );
