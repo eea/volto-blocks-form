@@ -25,11 +25,7 @@ export function moveBlock(formData, source, destination) {
   return {
     ...formData,
     [blocksLayoutFieldname]: {
-      items: move(
-        formData[blocksLayoutFieldname].items,
-        source.index,
-        destination.index,
-      ),
+      items: move(formData[blocksLayoutFieldname].items, source, destination),
     },
   };
 }

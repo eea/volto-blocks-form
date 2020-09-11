@@ -107,10 +107,12 @@ const BlocksForm = (props) => {
           if (!destination) {
             return;
           }
-          setFormData(
-            formId,
-            moveBlock(properties, source.index, destination.index),
+          const newFormData = moveBlock(
+            properties,
+            source.index,
+            destination.index,
           );
+          setFormData(formId, newFormData);
           return true;
         }}
         renderBlock={(block, blockId, index, draginfo) => (
