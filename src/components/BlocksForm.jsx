@@ -1,6 +1,5 @@
 import React from 'react';
 import { EditBlock } from '@plone/volto/components';
-import { useRecoilState } from 'recoil';
 import { getBlocks } from '@plone/volto/helpers';
 import DragDropForm from './DragDropForm';
 import {
@@ -13,14 +12,16 @@ import {
   previousBlockId,
 } from '../utils';
 import { settings } from '~/config';
-import { formStateFamily } from '../state';
+
+// import { useRecoilState } from 'recoil';
+// import { formStateFamily } from '../state';
+// const [formData, setFormData] = useRecoilState(formStateFamily(formId));
 
 const BlocksForm = (props) => {
-  console.log('blocksForm', props);
-  const { pathname, formId, onChangeField } = props;
-  const [formData, setFormData] = useRecoilState(formStateFamily(formId));
+  const { pathname, formId, onChangeField, properties, setFormData } = props;
+  console.log('formId', formId);
   const [selected, setSelected] = React.useState(props.selected);
-  const blockList = getBlocks(formData);
+  const blockList = getBlocks(properties);
 
   const handleKeyDown = (
     e,
@@ -42,13 +43,14 @@ const BlocksForm = (props) => {
       e.preventDefault();
     }
     if (e.key === 'Enter' && !disableEnter) {
+      console.log('onaddblock');
       onAddBlock(settings.defaultBlockType, index + 1);
       e.preventDefault();
     }
   };
 
   const onFocusPreviousBlock = (currentBlock, blockNode) => {
-    const prev = previousBlockId(formData, currentBlock);
+    const prev = previousBlockId(properties, currentBlock);
     if (prev === null) return;
 
     blockNode.blur();
@@ -57,7 +59,7 @@ const BlocksForm = (props) => {
   };
 
   const onFocusNextBlock = (currentBlock, blockNode) => {
-    const next = nextBlockId(formData, currentBlock);
+    const next = nextBlockId(properties, currentBlock);
     if (next === null) return;
 
     blockNode.blur();
@@ -66,34 +68,37 @@ const BlocksForm = (props) => {
   };
 
   const onMutateBlock = (id, value) => {
-    const newFormData = mutateBlock(formData, id, value);
-    setFormData(newFormData);
+    const newFormData = mutateBlock(properties, id, value);
+    setFormData(formId, newFormData);
   };
 
   const onAddBlock = (type, index) => {
-    const [id, newFormData] = addBlock(formData, type, index);
+    const [id, newFormData] = addBlock(properties, type, index);
     setSelected(id);
-    setFormData(newFormData);
+    console.log(JSON.stringify(properties), id);
+    console.log(JSON.stringify(newFormData));
+    setFormData(formId, newFormData);
   };
 
   const onChangeBlock = (id, value) => {
-    const newFormData = changeBlock(formData, id, value);
-    setFormData(newFormData);
+    const newFormData = changeBlock(properties, id, value);
+    setFormData(formId, newFormData);
   };
 
   const onDeleteBlock = (id, selectPrev) => {
-    const previous = previousBlockId(formData, id);
+    const previous = previousBlockId(properties, id);
 
-    setFormData(deleteBlock(formData));
+    setFormData(formId, deleteBlock(properties));
     setSelected(selectPrev ? previous : null);
   };
 
   const onMoveBlock = (dragIndex, hoverIndex) => {
-    setFormData(moveBlock(formData, dragIndex, hoverIndex));
+    setFormData(formId, moveBlock(properties, dragIndex, hoverIndex));
   };
 
   return (
     <div className="ui container">
+      <pre>{JSON.stringify(properties, null, 2)}</pre>
       <DragDropForm
         blockList={blockList}
         onMoveItem={(result) => {
@@ -101,7 +106,10 @@ const BlocksForm = (props) => {
           if (!destination) {
             return;
           }
-          setFormData(moveBlock(formData, source.index, destination.index));
+          setFormData(
+            formId,
+            moveBlock(properties, source.index, destination.index),
+          );
           return true;
         }}
         renderBlock={(block, blockId, index) => (
@@ -122,7 +130,7 @@ const BlocksForm = (props) => {
             onMutateBlock={onMutateBlock}
             onSelectBlock={(id) => setSelected(id)}
             pathname={pathname}
-            properties={formData}
+            properties={properties}
             selected={selected === blockId}
             type={block['@type']}
           />
