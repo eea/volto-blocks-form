@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { formStateQuery } from '../state'; // , formStateSelectorFamily
 
 const BlockSelection = (props) => {
-  const { children, block, columns, onSelectBlock } = props;
+  const { children, block, columns, selected } = props;
   const blockNode = React.useRef(null);
   const attachedEvent = React.useRef();
 
@@ -13,6 +13,12 @@ const BlockSelection = (props) => {
     console.log('focus null', block);
     setFormStates({ selected: null });
   }, [block, setFormStates]); // , onSelectBlock
+
+  React.useEffect(() => {
+    if (!selected) {
+      setFormStates({ selected: null });
+    }
+  }, [setFormStates, selected]);
 
   React.useEffect(() => {
     const { current = {} } = blockNode;

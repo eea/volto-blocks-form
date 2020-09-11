@@ -30,13 +30,12 @@ const getColumns = (coldata) => {
 
 const ColumnsBlockEdit = (props) => {
   const {
-    selected,
     block,
     data,
     onChangeBlock,
     onChangeField,
     pathname,
-    onSelectBlock,
+    selected,
   } = props;
   const { coldata = empty() } = data;
 
@@ -45,8 +44,8 @@ const ColumnsBlockEdit = (props) => {
       <RecoilRoot>
         <BlockSelection
           block={block}
-          onSelectBlock={onSelectBlock}
           columns={coldata?.columns_layout?.items || []}
+          selected={selected}
         >
           <div className="columns-demo-block">
             <h3>{data.block_title}</h3>
@@ -55,12 +54,12 @@ const ColumnsBlockEdit = (props) => {
                 <div
                   role="presentation"
                   className="demo-column"
-                  key={id}
                   onClick={(evt) => {
-                    console.log('click');
-                    evt.preventDefault();
-                    evt.stopPropagation();
+                    // console.log('click');
+                    // evt.preventDefault();
+                    // evt.stopPropagation();
                   }}
+                  key={id}
                 >
                   <h4>{`Column ${index}`}</h4>
                   <BlocksForm
