@@ -15,7 +15,7 @@ export default function install(config) {
     edit: ColumnsBlockEdit,
     restricted: false,
     mostUsed: true,
-    blockHasOwnFocusManagement: false,
+    blockHasOwnFocusManagement: true,
     sidebarTab: 1,
     security: {
       addPermission: [],

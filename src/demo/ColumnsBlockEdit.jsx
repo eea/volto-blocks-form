@@ -7,6 +7,7 @@ import { ColumnsBlockSchema } from './schema';
 import BlocksForm from '../components/BlocksForm';
 import { RecoilRoot } from 'recoil';
 import { emptyForm } from '../utils';
+import BlockSelection from './BlockSelection';
 
 import './styles.less';
 
@@ -35,40 +36,48 @@ const ColumnsBlockEdit = (props) => {
     onChangeBlock,
     onChangeField,
     pathname,
+    onSelectBlock,
   } = props;
-  console.log('data', data);
   const { coldata = empty() } = data;
+  console.log('coldata', coldata);
+
   return (
     <>
       <RecoilRoot>
-        <div className="columns-demo-block">
-          <h3>{data.block_title}</h3>
-          {getColumns(coldata).map(([id, column]) => {
-            return (
-              <div className="demo-column" key={id}>
-                <BlocksForm
-                  properties={isEmpty(column) ? emptyForm() : column}
-                  setFormData={(id, value) => {
-                    console.log('set', id, value);
-                    onChangeBlock(block, {
-                      ...data,
-                      coldata: {
-                        ...coldata,
-                        columns: {
-                          ...coldata.columns,
-                          [id]: value,
+        <BlockSelection
+          block={block}
+          onSelectBlock={onSelectBlock}
+          columns={coldata?.columns_layout?.items || []}
+        >
+          <div className="columns-demo-block">
+            <h3>{data.block_title}</h3>
+            {getColumns(coldata).map(([id, column], index) => {
+              return (
+                <div className="demo-column" key={id}>
+                  <h4>{`Column ${index}`}</h4>
+                  <BlocksForm
+                    properties={isEmpty(column) ? emptyForm() : column}
+                    setFormData={(id, value) => {
+                      onChangeBlock(block, {
+                        ...data,
+                        coldata: {
+                          ...coldata,
+                          columns: {
+                            ...coldata.columns,
+                            [id]: value,
+                          },
                         },
-                      },
-                    });
-                  }}
-                  formId={id}
-                  onChangeField={onChangeField}
-                  pathname={pathname}
-                />
-              </div>
-            );
-          })}
-        </div>
+                      });
+                    }}
+                    formId={id}
+                    onChangeField={onChangeField}
+                    pathname={pathname}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </BlockSelection>
         <SidebarPortal selected={selected}>
           <InlineForm
             schema={ColumnsBlockSchema}

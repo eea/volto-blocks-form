@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import { EditBlock } from '@plone/volto/components';
 import { getBlocks } from '@plone/volto/helpers';
 import DragDropForm from './DragDropForm';
@@ -11,16 +12,17 @@ import {
   nextBlockId,
   previousBlockId,
 } from '../utils';
+import { formStateFamily } from '../state';
 import { settings } from '~/config';
 
-// import { useRecoilState } from 'recoil';
-// import { formStateFamily } from '../state';
-// const [formData, setFormData] = useRecoilState(formStateFamily(formId));
+const DEBUG = false;
 
 const BlocksForm = (props) => {
   const { pathname, formId, onChangeField, properties, setFormData } = props;
-  console.log('formId', formId);
-  const [selected, setSelected] = React.useState(props.selected);
+
+  // due to HMR, this will yield warnings in developer console, see recoil issues on that
+  const [state, setState] = useRecoilState(formStateFamily(formId));
+  // const [state, setState] = React.useState({});
   const blockList = getBlocks(properties);
 
   const handleKeyDown = (
@@ -43,7 +45,6 @@ const BlocksForm = (props) => {
       e.preventDefault();
     }
     if (e.key === 'Enter' && !disableEnter) {
-      console.log('onaddblock');
       onAddBlock(settings.defaultBlockType, index + 1);
       e.preventDefault();
     }
@@ -55,7 +56,7 @@ const BlocksForm = (props) => {
 
     blockNode.blur();
 
-    setSelected(prev);
+    setState({ ...state, selected: prev });
   };
 
   const onFocusNextBlock = (currentBlock, blockNode) => {
@@ -64,7 +65,7 @@ const BlocksForm = (props) => {
 
     blockNode.blur();
 
-    setSelected(next);
+    setState({ ...state, selected: next });
   };
 
   const onMutateBlock = (id, value) => {
@@ -74,10 +75,8 @@ const BlocksForm = (props) => {
 
   const onAddBlock = (type, index) => {
     const [id, newFormData] = addBlock(properties, type, index);
-    setSelected(id);
-    console.log(JSON.stringify(properties), id);
-    console.log(JSON.stringify(newFormData));
     setFormData(formId, newFormData);
+    return id;
   };
 
   const onChangeBlock = (id, value) => {
@@ -89,7 +88,8 @@ const BlocksForm = (props) => {
     const previous = previousBlockId(properties, id);
 
     setFormData(formId, deleteBlock(properties));
-    setSelected(selectPrev ? previous : null);
+
+    setState({ ...state, selected: selectPrev ? previous : null });
   };
 
   const onMoveBlock = (dragIndex, hoverIndex) => {
@@ -98,7 +98,7 @@ const BlocksForm = (props) => {
 
   return (
     <div className="ui container">
-      <pre>{JSON.stringify(properties, null, 2)}</pre>
+      {DEBUG ? <pre>{JSON.stringify(properties, null, 2)}</pre> : ''}
       <DragDropForm
         blockList={blockList}
         onMoveItem={(result) => {
@@ -128,10 +128,10 @@ const BlocksForm = (props) => {
             onFocusPreviousBlock={onFocusPreviousBlock}
             onMoveBlock={onMoveBlock}
             onMutateBlock={onMutateBlock}
-            onSelectBlock={(id) => setSelected(id)}
+            onSelectBlock={(id) => setState({ ...state, selected: id })}
             pathname={pathname}
             properties={properties}
-            selected={selected === blockId}
+            selected={state.selected === blockId}
             type={block['@type']}
           />
         )}
