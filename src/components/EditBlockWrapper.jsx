@@ -5,7 +5,7 @@ import { blockHasValue } from '@plone/volto/helpers';
 import dragSVG from '@plone/volto/icons/drag.svg';
 
 const EditBlockWrapper = (props) => {
-  const { provided, block, selected, children } = props;
+  const { draginfo, block, selected, children } = props;
 
   const hideHandler = React.useCallback((data) => {
     return !blockHasValue(data);
@@ -13,8 +13,8 @@ const EditBlockWrapper = (props) => {
 
   return (
     <div
-      ref={provided.innerRef}
-      {...provided.draggableProps}
+      ref={draginfo.innerRef}
+      {...draginfo.draggableProps}
       className={`block-editor-${block['@type']}`}
     >
       <div style={{ position: 'relative' }}>
@@ -23,7 +23,7 @@ const EditBlockWrapper = (props) => {
             visibility: selected && !hideHandler(block) ? 'visible' : 'hidden',
             display: 'inline-block',
           }}
-          {...provided.dragHandleProps}
+          {...draginfo.dragHandleProps}
           className="drag handle wrapper"
         >
           <Icon name={dragSVG} size="18px" />

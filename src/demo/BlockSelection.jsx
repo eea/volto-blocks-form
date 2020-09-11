@@ -9,10 +9,16 @@ const BlockSelection = (props) => {
 
   const [formStates, setFormStates] = useRecoilState(formStateQuery(columns));
 
-  const focusBlock = React.useCallback(() => {
-    console.log('focus null', block);
-    setFormStates({ selected: null });
-  }, [block, setFormStates]); // , onSelectBlock
+  const focusBlock = React.useCallback(
+    (evt) => {
+      // console.log('focus null', block, evt);
+      // TODO: optimize so that we only set to null when needed
+      // Right now there's an extra set to null before it's properly set by the
+      // form
+      setFormStates({ selected: null });
+    },
+    [setFormStates],
+  );
 
   React.useEffect(() => {
     if (!selected) {

@@ -14,6 +14,7 @@ import {
 } from '../utils';
 import { formStateFamily } from '../state';
 import { settings } from '~/config';
+import EditBlockWrapper from './EditBlockWrapper';
 
 const DEBUG = false;
 
@@ -112,28 +113,35 @@ const BlocksForm = (props) => {
           );
           return true;
         }}
-        renderBlock={(block, blockId, index) => (
-          <EditBlock
-            block={blockId}
-            data={block}
-            handleKeyDown={handleKeyDown}
-            id={blockId}
-            index={index}
-            key={blockId}
-            onAddBlock={onAddBlock}
-            onChangeBlock={onChangeBlock}
-            onChangeField={onChangeField}
-            onDeleteBlock={onDeleteBlock}
-            onFocusNextBlock={onFocusNextBlock}
-            onFocusPreviousBlock={onFocusPreviousBlock}
-            onMoveBlock={onMoveBlock}
-            onMutateBlock={onMutateBlock}
-            onSelectBlock={(id) => setState({ ...state, selected: id })}
-            pathname={pathname}
-            properties={properties}
+        renderBlock={(block, blockId, index, draginfo) => (
+          <EditBlockWrapper
+            block={block}
+            blockId={blockId}
+            draginfo={draginfo}
             selected={state.selected === blockId}
-            type={block['@type']}
-          />
+          >
+            <EditBlock
+              block={blockId}
+              data={block}
+              handleKeyDown={handleKeyDown}
+              id={blockId}
+              index={index}
+              key={blockId}
+              onAddBlock={onAddBlock}
+              onChangeBlock={onChangeBlock}
+              onChangeField={onChangeField}
+              onDeleteBlock={onDeleteBlock}
+              onFocusNextBlock={onFocusNextBlock}
+              onFocusPreviousBlock={onFocusPreviousBlock}
+              onMoveBlock={onMoveBlock}
+              onMutateBlock={onMutateBlock}
+              onSelectBlock={(id) => setState({ ...state, selected: id })}
+              pathname={pathname}
+              properties={properties}
+              selected={state.selected === blockId}
+              type={block['@type']}
+            />
+          </EditBlockWrapper>
         )}
       />
     </div>

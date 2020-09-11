@@ -1,10 +1,9 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import EditBlockWrapper from './EditBlockWrapper';
 
 const DragDropForm = (props) => {
-  const { blockList, renderBlock, onMoveItem, selected } = props;
+  const { blockList, renderBlock, onMoveItem } = props;
   const [placeholderProps, setPlaceholderProps] = React.useState({});
 
   const handleDragStart = React.useCallback((event) => {
@@ -100,16 +99,7 @@ const DragDropForm = (props) => {
           >
             {blockList.map(([blockId, block], index) => (
               <Draggable draggableId={blockId} index={index} key={blockId}>
-                {(provided) => (
-                  <EditBlockWrapper
-                    block={block}
-                    blockId={blockId}
-                    provided={provided}
-                    selected={selected === blockId}
-                  >
-                    {renderBlock(block, blockId, index)}
-                  </EditBlockWrapper>
-                )}
+                {(draginfo) => renderBlock(block, blockId, index, draginfo)}
               </Draggable>
             ))}
             {provided.placeholder}
