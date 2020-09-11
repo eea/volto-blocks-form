@@ -19,7 +19,14 @@ import EditBlockWrapper from './EditBlockWrapper';
 const DEBUG = false;
 
 const BlocksForm = (props) => {
-  const { pathname, formId, onChangeField, properties, setFormData } = props;
+  const {
+    pathname,
+    formId,
+    onChangeField,
+    properties,
+    setFormData,
+    renderBlock,
+  } = props;
 
   // due to HMR, this will yield warnings in developer console, see recoil issues on that
   const [state, setState] = useRecoilState(formStateFamily(formId));
@@ -116,36 +123,40 @@ const BlocksForm = (props) => {
           // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
-        renderChild={(block, blockId, index, draginfo) => (
-          <EditBlockWrapper
-            block={block}
-            blockId={blockId}
-            draginfo={draginfo}
-            selected={state.selected === blockId}
-          >
-            <EditBlock
-              block={blockId}
-              data={block}
-              handleKeyDown={handleKeyDown}
-              id={blockId}
-              index={index}
-              key={blockId}
-              onAddBlock={onAddBlock}
-              onChangeBlock={onChangeBlock}
-              onChangeField={onChangeField}
-              onDeleteBlock={onDeleteBlock}
-              onFocusNextBlock={onFocusNextBlock}
-              onFocusPreviousBlock={onFocusPreviousBlock}
-              onMoveBlock={onMoveBlock}
-              onMutateBlock={onMutateBlock}
-              onSelectBlock={(id) => setState({ ...state, selected: id })}
-              pathname={pathname}
-              properties={properties}
+        renderChild={(block, blockId, index, draginfo) =>
+          renderBlock ? (
+            renderBlock(block, blockId, index, draginfo)
+          ) : (
+            <EditBlockWrapper
+              block={block}
+              blockId={blockId}
+              draginfo={draginfo}
               selected={state.selected === blockId}
-              type={block['@type']}
-            />
-          </EditBlockWrapper>
-        )}
+            >
+              <EditBlock
+                block={blockId}
+                data={block}
+                handleKeyDown={handleKeyDown}
+                id={blockId}
+                index={index}
+                key={blockId}
+                onAddBlock={onAddBlock}
+                onChangeBlock={onChangeBlock}
+                onChangeField={onChangeField}
+                onDeleteBlock={onDeleteBlock}
+                onFocusNextBlock={onFocusNextBlock}
+                onFocusPreviousBlock={onFocusPreviousBlock}
+                onMoveBlock={onMoveBlock}
+                onMutateBlock={onMutateBlock}
+                onSelectBlock={(id) => setState({ ...state, selected: id })}
+                pathname={pathname}
+                properties={properties}
+                selected={state.selected === blockId}
+                type={block['@type']}
+              />
+            </EditBlockWrapper>
+          )
+        }
       />
     </div>
   );
