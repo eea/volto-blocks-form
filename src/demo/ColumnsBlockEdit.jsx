@@ -39,7 +39,6 @@ const ColumnsBlockEdit = (props) => {
     onSelectBlock,
   } = props;
   const { coldata = empty() } = data;
-  console.log('coldata', coldata);
 
   return (
     <>
@@ -53,7 +52,16 @@ const ColumnsBlockEdit = (props) => {
             <h3>{data.block_title}</h3>
             {getColumns(coldata).map(([id, column], index) => {
               return (
-                <div className="demo-column" key={id}>
+                <div
+                  role="presentation"
+                  className="demo-column"
+                  key={id}
+                  onClick={(evt) => {
+                    console.log('click');
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                  }}
+                >
                   <h4>{`Column ${index}`}</h4>
                   <BlocksForm
                     properties={isEmpty(column) ? emptyForm() : column}

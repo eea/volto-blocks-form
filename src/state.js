@@ -1,4 +1,4 @@
-import { atomFamily, selector, waitForAll, selectorFamily } from 'recoil';
+import { atomFamily, waitForAll, selectorFamily } from 'recoil';
 
 export const formStateFamily = atomFamily({
   key: 'form-state',
@@ -11,11 +11,12 @@ export const formStateQuery = selectorFamily({
     const formStates = get(waitForAll(formIds.map(formStateFamily)));
     return formStates;
   },
-  set: (formIds) => ({ set, get }, newFormData) => {
-    const formStateAtoms = get(waitForAll(formIds.map(formStateFamily)));
-    console.log('ff', formStateAtoms, formIds);
-    // formStateAtoms.forEach((atom) => {
-    //   set(atom, (prevState) => ({ ...prevState, ...newFormData }));
-    // });
+  set: (formIds) => ({ set }, newFormData) => {
+    const formStateAtoms = formIds.map(formStateFamily);
+    formStateAtoms.forEach((atom) => {
+      set(atom, (prevState) => {
+        return { ...prevState, ...newFormData };
+      });
+    });
   },
 });
