@@ -2,8 +2,8 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-const DragDropForm = (props) => {
-  const { blockList, renderBlock, onMoveItem } = props;
+const DragDropList = (props) => {
+  const { childList, renderChild, onMoveItem } = props;
   const [placeholderProps, setPlaceholderProps] = React.useState({});
 
   const handleDragStart = React.useCallback((event) => {
@@ -97,9 +97,9 @@ const DragDropForm = (props) => {
             {...provided.droppableProps}
             style={{ position: 'relative' }}
           >
-            {blockList.map(([blockId, block], index) => (
-              <Draggable draggableId={blockId} index={index} key={blockId}>
-                {(draginfo) => renderBlock(block, blockId, index, draginfo)}
+            {childList.map(([childId, child], index) => (
+              <Draggable draggableId={childId} index={index} key={childId}>
+                {(draginfo) => renderChild(child, childId, index, draginfo)}
               </Draggable>
             ))}
             {provided.placeholder}
@@ -122,4 +122,4 @@ const DragDropForm = (props) => {
   );
 };
 
-export default DragDropForm;
+export default DragDropList;

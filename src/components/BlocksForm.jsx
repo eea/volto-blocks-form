@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { EditBlock } from '@plone/volto/components';
 import { getBlocks } from '@plone/volto/helpers';
-import DragDropForm from './DragDropForm';
+import DragDropList from './DragDropList';
 import {
   addBlock,
   changeBlock,
@@ -100,8 +100,8 @@ const BlocksForm = (props) => {
   return (
     <div className="ui container">
       {DEBUG ? <pre>{JSON.stringify(properties, null, 2)}</pre> : ''}
-      <DragDropForm
-        blockList={blockList}
+      <DragDropList
+        childList={blockList}
         onMoveItem={(result) => {
           const { source, destination } = result;
           if (!destination) {
@@ -113,9 +113,10 @@ const BlocksForm = (props) => {
             destination.index,
           );
           setFormData(formId, newFormData);
+          // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
-        renderBlock={(block, blockId, index, draginfo) => (
+        renderChild={(block, blockId, index, draginfo) => (
           <EditBlockWrapper
             block={block}
             blockId={blockId}
