@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 import { v4 as uuid } from 'uuid';
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
@@ -38,6 +39,7 @@ const ColumnsBlockEdit = (props) => {
     selected,
   } = props;
   const { coldata = empty() } = data;
+  const columnList = getColumns(coldata);
 
   return (
     <>
@@ -49,19 +51,10 @@ const ColumnsBlockEdit = (props) => {
         >
           <div className="columns-demo-block">
             <h3>{data.block_title}</h3>
-            <div className="inner">
-              {getColumns(coldata).map(([id, column], index) => {
+            <Grid columns={columnList.length}>
+              {columnList.map(([id, column], index) => {
                 return (
-                  <div
-                    role="presentation"
-                    className="demo-column"
-                    onClick={(evt) => {
-                      // console.log('click');
-                      // evt.preventDefault();
-                      // evt.stopPropagation();
-                    }}
-                    key={id}
-                  >
+                  <Grid.Column className="demo-column" key={id}>
                     <h4>{`Column ${index}`}</h4>
                     <BlocksForm
                       properties={isEmpty(column) ? emptyForm() : column}
@@ -81,10 +74,10 @@ const ColumnsBlockEdit = (props) => {
                       onChangeField={onChangeField}
                       pathname={pathname}
                     />
-                  </div>
+                  </Grid.Column>
                 );
               })}
-            </div>
+            </Grid>
           </div>
         </BlockSelection>
         <SidebarPortal selected={selected}>
