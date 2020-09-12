@@ -25,7 +25,7 @@ const empty = () => {
 const ColumnsWidget = (props) => {
   const { value = {}, id, onChange } = props;
   const { columns = {} } = value;
-  const columnsList = (value.columns_layout.items || []).map((id) => [
+  const columnsList = (value.columns_layout?.items || []).map((id) => [
     id,
     columns[id],
   ]);

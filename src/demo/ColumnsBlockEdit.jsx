@@ -38,6 +38,13 @@ const ColumnsBlockEdit = (props) => {
     pathname,
     selected,
   } = props;
+
+  React.useEffect(() => {
+    if (!data.coldata) {
+      onChangeBlock(block, { ...data, coldata: empty() });
+    }
+  });
+
   const { coldata = empty() } = data;
   const columnList = getColumns(coldata);
 

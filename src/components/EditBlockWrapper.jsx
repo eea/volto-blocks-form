@@ -7,10 +7,6 @@ import dragSVG from '@plone/volto/icons/drag.svg';
 const EditBlockWrapper = (props) => {
   const { draginfo, block, selected, children } = props;
 
-  const hideHandler = React.useCallback((data) => {
-    return !blockHasValue(data);
-  }, []);
-
   return (
     <div
       ref={draginfo.innerRef}
@@ -20,7 +16,7 @@ const EditBlockWrapper = (props) => {
       <div style={{ position: 'relative' }}>
         <div
           style={{
-            visibility: selected && !hideHandler(block) ? 'visible' : 'hidden',
+            visibility: selected && blockHasValue(block) ? 'visible' : 'hidden',
             display: 'inline-block',
           }}
           {...draginfo.dragHandleProps}

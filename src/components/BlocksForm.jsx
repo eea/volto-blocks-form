@@ -95,7 +95,9 @@ const BlocksForm = (props) => {
   const onDeleteBlock = (id, selectPrev) => {
     const previous = previousBlockId(properties, id);
 
-    setFormData(formId, deleteBlock(properties, id));
+    const newFormData = deleteBlock(properties, id);
+    console.log('delete', JSON.stringify(newFormData, null, 2));
+    setFormData(formId, newFormData);
 
     setState({ ...state, selected: selectPrev ? previous : null });
   };
@@ -133,6 +135,7 @@ const BlocksForm = (props) => {
               draginfo={draginfo}
               selected={state.selected === blockId}
             >
+              {JSON.stringify(state.selected === blockId)}
               <EditBlock
                 block={blockId}
                 data={block}
