@@ -17,8 +17,9 @@ const BlockSelection = (props) => {
       if (
         doesNodeContainClick(blockNode.current, evt) &&
         !doesNodeContainClick(innerNode.current, evt)
-      )
+      ) {
         setFormStates({ selected: null });
+      }
     },
     [setFormStates],
   );
@@ -40,7 +41,7 @@ const BlockSelection = (props) => {
   });
 
   return (
-    <div ref={blockNode}>
+    <div ref={blockNode} className="outer-selection-wrapper">
       {DEBUG ? (
         <ul>
           {(formStates || []).map((s, i) => (
@@ -50,6 +51,7 @@ const BlockSelection = (props) => {
       ) : (
         ''
       )}
+      {props.title}
       <div className="inner-selection-wrapper" ref={innerNode}>
         {children}
       </div>

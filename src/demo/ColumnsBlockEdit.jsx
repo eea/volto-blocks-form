@@ -34,13 +34,13 @@ const ColumnsBlockEdit = (props) => {
   return (
     <>
       <RecoilRoot>
-        <BlockSelection
-          block={block}
-          columns={coldata?.columns_layout?.items || []}
-          selected={selected}
-        >
-          <div className="columns-demo-block">
-            <h3>{data.block_title}</h3>
+        <div className="columns-demo-block">
+          <BlockSelection
+            block={block}
+            columns={coldata?.columns_layout?.items || []}
+            selected={selected}
+            title={<h3>{data.block_title}</h3>}
+          >
             <Grid columns={columnList.length}>
               {columnList.map(([id, column], index) => {
                 return (
@@ -68,8 +68,8 @@ const ColumnsBlockEdit = (props) => {
                 );
               })}
             </Grid>
-          </div>
-        </BlockSelection>
+          </BlockSelection>
+        </div>
         <SidebarPortal selected={selected}>
           <InlineForm
             schema={ColumnsBlockSchema}
