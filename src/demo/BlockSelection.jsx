@@ -1,3 +1,8 @@
+/**
+ * This component is only needed because we need <RecoilRoot> to wrap our
+ * stuff. Otherwise we'd implement this functionality in ColumnsBlockEdit
+ *
+ */
 import React from 'react';
 import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
 import { useRecoilState } from 'recoil';
@@ -9,6 +14,7 @@ const BlockSelection = (props) => {
   const { children, columns, selected } = props;
   const blockNode = React.useRef(null);
   const innerNode = React.useRef(null);
+  const currentSelectedBlock = React.useRef(null);
 
   const [formStates, setFormStates] = useRecoilState(formStateQuery(columns));
 
@@ -38,6 +44,17 @@ const BlockSelection = (props) => {
     return () => {
       current.removeEventListener('mousedown', focusBlock, false);
     };
+  });
+
+  React.useEffect(() => {
+    formStates.find((state) => {
+      if (state.selected && state.selected !== currentSelectedBlock.current) {
+        currentSelectedBlock.current = state.selected;
+        setFormStates({ selected: currentSelectedBlock.current });
+        return true;
+      }
+      return false;
+    });
   });
 
   return (
