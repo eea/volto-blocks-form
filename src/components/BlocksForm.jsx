@@ -135,7 +135,6 @@ const BlocksForm = (props) => {
               draginfo={draginfo}
               selected={state.selected === blockId}
             >
-              {JSON.stringify(state.selected === blockId)}
               <EditBlock
                 block={blockId}
                 data={block}

@@ -1,23 +1,24 @@
 import React from 'react';
+import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
 import { useRecoilState } from 'recoil';
 import { formStateQuery } from '../state'; // , formStateSelectorFamily
 
 const DEBUG = false;
 
 const BlockSelection = (props) => {
-  const { children, block, columns, selected } = props;
+  const { children, columns, selected } = props;
   const blockNode = React.useRef(null);
-  const attachedEvent = React.useRef();
+  const innerNode = React.useRef(null);
 
   const [formStates, setFormStates] = useRecoilState(formStateQuery(columns));
 
   const focusBlock = React.useCallback(
     (evt) => {
-      // console.log('focus null', block, evt);
-      // TODO: optimize so that we only set to null when needed
-      // Right now there's an extra set to null before it's properly set by the
-      // form
-      setFormStates({ selected: null });
+      if (
+        doesNodeContainClick(blockNode.current, evt) &&
+        !doesNodeContainClick(innerNode.current, evt)
+      )
+        setFormStates({ selected: null });
     },
     [setFormStates],
   );
@@ -31,10 +32,7 @@ const BlockSelection = (props) => {
   React.useEffect(() => {
     const { current = {} } = blockNode;
 
-    if (!attachedEvent.current && current) {
-      current.addEventListener('click', focusBlock, false);
-      attachedEvent.current = true;
-    }
+    current.addEventListener('mousedown', focusBlock, false);
 
     return () => {
       current.removeEventListener('mousedown', focusBlock, false);
@@ -52,7 +50,9 @@ const BlockSelection = (props) => {
       ) : (
         ''
       )}
-      {children}
+      <div className="inner-selection-wrapper" ref={innerNode}>
+        {children}
+      </div>
     </div>
   );
 };
