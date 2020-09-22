@@ -24,6 +24,7 @@ const BlocksForm = (props) => {
     blockWrapper,
     selectedBlock,
     onSelectBlock,
+    allowedBlocks,
     manage,
   } = props;
 
@@ -153,6 +154,7 @@ const BlocksForm = (props) => {
                 selected={selectedBlock === blockId}
                 type={block['@type']}
                 manage={manage}
+                allowedBlocks={allowedBlocks}
               />
             </BlockWrapper>
           )
