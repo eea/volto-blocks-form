@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "description": "volto-blocks-form: Volto add-on",
   "main": "src/index.js",
-  "repository": "https://github.com/eea/volto-blocks-form",
   "author": "European Environment Agency: IDM2 A-Team",
   "license": "MIT",
   "devDependencies": {
@@ -13,4 +12,17 @@
     "release": "release-it",
     "bootstrap": "./bootstrap"
   },
+  "homepage": "https://github.com/eea/volto-blocks-form",
+  "keywords": [
+    "volto-addon",
+    "volto-block",
+    "volto-form",
+    "volto",
+    "plone",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eea/volto-blocks-form.git"
+  }
 }
