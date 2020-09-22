@@ -1,24 +1,18 @@
-import { v4 as uuid } from 'uuid';
+/**
+ * Blocks helper.
+ * @module helpers/Blocks
+ */
+
 import { omit, without } from 'lodash';
 import move from 'lodash-move';
+import { v4 as uuid } from 'uuid';
 import {
-  getBlocksFieldname,
   getBlocksLayoutFieldname,
+  getBlocksFieldname,
   blockHasValue,
 } from '@plone/volto/helpers';
-import { settings } from '~/config';
 
-export function emptyForm() {
-  const id = uuid();
-  return {
-    blocks: {
-      [id]: {
-        '@type': settings.defaultBlockType,
-      },
-    },
-    blocks_layout: { items: [id] },
-  };
-}
+import { settings } from '~/config';
 
 export function moveBlock(formData, source, destination) {
   const blocksLayoutFieldname = getBlocksLayoutFieldname(formData);
@@ -156,4 +150,16 @@ export function previousBlockId(formData, currentBlock) {
   }
   const newindex = currentIndex - 1;
   return formData[blocksLayoutFieldname].items[newindex];
+}
+
+export function emptyBlocksForm() {
+  const id = uuid();
+  return {
+    blocks: {
+      [id]: {
+        '@type': settings.defaultBlockType,
+      },
+    },
+    blocks_layout: { items: [id] },
+  };
 }

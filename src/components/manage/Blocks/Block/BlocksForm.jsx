@@ -1,8 +1,7 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
 import { EditBlock } from '@plone/volto/components';
+import { DragDropList } from '@eeacms/volto-blocks-form/components';
 import { getBlocks } from '@plone/volto/helpers';
-import DragDropList from './DragDropList';
 import {
   addBlock,
   changeBlock,
@@ -11,26 +10,22 @@ import {
   mutateBlock,
   nextBlockId,
   previousBlockId,
-} from '../utils';
-import { formStateFamily } from '../state';
+} from '@eeacms/volto-blocks-form/helpers';
 import { settings } from '~/config';
 import EditBlockWrapper from './EditBlockWrapper';
-
-const DEBUG = false;
 
 const BlocksForm = (props) => {
   const {
     pathname,
-    formId,
     onChangeField,
     properties,
-    setFormData,
+    onChangeFormData,
     renderBlock,
+    blockWrapper,
+    selectedBlock,
+    onSelectBlock,
   } = props;
 
-  // due to HMR, this will yield warnings in developer console, see recoil issues on that
-  const [state, setState] = useRecoilState(formStateFamily(formId));
-  // const [state, setState] = React.useState({});
   const blockList = getBlocks(properties);
 
   const handleKeyDown = (
@@ -64,7 +59,7 @@ const BlocksForm = (props) => {
 
     blockNode.blur();
 
-    setState({ ...state, selected: prev });
+    onSelectBlock(prev);
   };
 
   const onFocusNextBlock = (currentBlock, blockNode) => {
@@ -73,41 +68,43 @@ const BlocksForm = (props) => {
 
     blockNode.blur();
 
-    setState({ ...state, selected: next });
+    onSelectBlock(next);
   };
 
   const onMutateBlock = (id, value) => {
     const newFormData = mutateBlock(properties, id, value);
-    setFormData(formId, newFormData);
+    onChangeFormData(newFormData);
   };
 
   const onAddBlock = (type, index) => {
     const [id, newFormData] = addBlock(properties, type, index);
-    setFormData(formId, newFormData);
+    onChangeFormData(newFormData);
     return id;
   };
 
   const onChangeBlock = (id, value) => {
     const newFormData = changeBlock(properties, id, value);
-    setFormData(formId, newFormData);
+    onChangeFormData(newFormData);
   };
 
   const onDeleteBlock = (id, selectPrev) => {
     const previous = previousBlockId(properties, id);
 
     const newFormData = deleteBlock(properties, id);
-    setFormData(formId, newFormData);
+    onChangeFormData(newFormData);
 
-    setState({ ...state, selected: selectPrev ? previous : null });
+    onSelectBlock(selectPrev ? previous : null);
   };
 
   const onMoveBlock = (dragIndex, hoverIndex) => {
-    setFormData(formId, moveBlock(properties, dragIndex, hoverIndex));
+    const newFormData = moveBlock(properties, dragIndex, hoverIndex);
+    onChangeFormData(newFormData);
   };
 
+  const BlockWrapper = blockWrapper ? blockWrapper : EditBlockWrapper;
+
   return (
-    <div className="ui container">
-      {DEBUG ? <pre>{JSON.stringify(properties, null, 2)}</pre> : ''}
+    <div className="ui container blocks-form">
       <DragDropList
         childList={blockList}
         onMoveItem={(result) => {
@@ -120,7 +117,7 @@ const BlocksForm = (props) => {
             source.index,
             destination.index,
           );
-          setFormData(formId, newFormData);
+          onChangeFormData(newFormData);
           // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
@@ -128,11 +125,11 @@ const BlocksForm = (props) => {
           renderBlock ? (
             renderBlock(block, blockId, index, draginfo)
           ) : (
-            <EditBlockWrapper
+            <BlockWrapper
               block={block}
               blockId={blockId}
               draginfo={draginfo}
-              selected={state.selected === blockId}
+              selected={selectedBlock === blockId}
             >
               <EditBlock
                 block={blockId}
@@ -149,13 +146,13 @@ const BlocksForm = (props) => {
                 onFocusPreviousBlock={onFocusPreviousBlock}
                 onMoveBlock={onMoveBlock}
                 onMutateBlock={onMutateBlock}
-                onSelectBlock={(id) => setState({ ...state, selected: id })}
+                onSelectBlock={onSelectBlock}
                 pathname={pathname}
                 properties={properties}
-                selected={state.selected === blockId}
+                selected={selectedBlock === blockId}
                 type={block['@type']}
               />
-            </EditBlockWrapper>
+            </BlockWrapper>
           )
         }
       />

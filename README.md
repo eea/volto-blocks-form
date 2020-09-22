@@ -25,7 +25,7 @@ Demo GIF
     ],
 
     "dependencies": {
-        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.1.0"
+        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.2.0"
     }
     ```
 

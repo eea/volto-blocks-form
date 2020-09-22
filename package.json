@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-blocks-form",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "volto-blocks-form: Volto add-on",
   "main": "src/index.js",
   "repository": "https://github.com/eea/volto-blocks-form",
@@ -13,7 +13,4 @@
     "release": "release-it",
     "bootstrap": "./bootstrap"
   },
-  "dependencies": {
-    "recoil": "0.0.10"
-  }
 }
