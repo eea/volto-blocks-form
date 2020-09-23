@@ -25,6 +25,8 @@ const BlocksForm = (props) => {
     selectedBlock,
     onSelectBlock,
     allowedBlocks,
+    title,
+    description,
     manage,
   } = props;
 
@@ -106,7 +108,7 @@ const BlocksForm = (props) => {
   const BlockWrapper = blockWrapper ? blockWrapper : EditBlockWrapper;
 
   return (
-    <div className="ui container blocks-form">
+    <div className="ui container blocks-form" title={title}>
       <DragDropList
         childList={blockList}
         onMoveItem={(result) => {
@@ -155,6 +157,8 @@ const BlocksForm = (props) => {
                 type={block['@type']}
                 manage={manage}
                 allowedBlocks={allowedBlocks}
+                formTitle={title}
+                formDescription={description}
               />
             </BlockWrapper>
           )
