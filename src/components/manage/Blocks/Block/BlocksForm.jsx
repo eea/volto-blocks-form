@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditBlock } from '@plone/volto/components';
+import EditBlock from './Edit';
 import { DragDropList } from '@eeacms/volto-blocks-form/components';
 import { getBlocks } from '@plone/volto/helpers';
 import {
@@ -134,6 +134,7 @@ const BlocksForm = (props) => {
               blockId={blockId}
               draginfo={draginfo}
               selected={selectedBlock === blockId}
+              onDeleteBlock={onDeleteBlock}
             >
               <EditBlock
                 block={blockId}
