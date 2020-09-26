@@ -135,6 +135,8 @@ const BlocksForm = (props) => {
               draginfo={draginfo}
               selected={selectedBlock === blockId}
               onDeleteBlock={onDeleteBlock}
+              onMutateBlock={onMutateBlock}
+              allowedBlocks={allowedBlocks}
             >
               <EditBlock
                 block={blockId}
