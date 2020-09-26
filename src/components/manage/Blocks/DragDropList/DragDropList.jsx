@@ -66,6 +66,7 @@ const DragDropList = (props) => {
     var clientY =
       parseFloat(window.getComputedStyle(draggedDOM.parentNode).paddingTop) +
       updatedArray.slice(0, destinationIndex).reduce((total, curr) => {
+        if (!curr) return total;
         const style = curr.currentStyle || window.getComputedStyle(curr);
         const marginBottom = parseFloat(style.marginBottom);
         return total + curr.clientHeight + marginBottom;
