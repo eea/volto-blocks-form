@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 // import { v4 as uuid } from 'uuid';
 
 const DragDropList = (props) => {
-  const { childList, renderChild, onMoveItem } = props;
+  const { childList, children, onMoveItem } = props; //renderChild
   const [placeholderProps, setPlaceholderProps] = React.useState({});
 
   const handleDragStart = React.useCallback((event) => {
@@ -102,7 +102,7 @@ const DragDropList = (props) => {
           >
             {childList.map(([childId, child], index) => (
               <Draggable draggableId={childId} index={index} key={childId}>
-                {(draginfo) => renderChild(child, childId, index, draginfo)}
+                {(draginfo) => children({ child, childId, index, draginfo })}
               </Draggable>
             ))}
             {provided.placeholder}

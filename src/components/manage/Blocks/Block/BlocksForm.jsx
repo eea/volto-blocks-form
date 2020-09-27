@@ -109,51 +109,6 @@ const BlocksForm = (props) => {
     const newFormData = moveBlock(properties, dragIndex, hoverIndex);
     onChangeFormData(newFormData);
   };
-
-  return (
-    <div className="ui container blocks-form" title={title}>
-      {blockList.map(([blockId, block], index) =>
-        children(
-          {
-            block,
-            blockId,
-            draginfo: {},
-            selected: selectedBlock === blockId,
-            onMutateBlock,
-            onDeleteBlock,
-            allowedBlocks,
-          },
-
-          <EditBlock
-            block={blockId}
-            data={block}
-            handleKeyDown={handleKeyDown}
-            id={blockId}
-            index={index}
-            key={blockId}
-            onAddBlock={onAddBlock}
-            onChangeBlock={onChangeBlock}
-            onChangeField={onChangeField}
-            onDeleteBlock={onDeleteBlock}
-            onFocusNextBlock={onFocusNextBlock}
-            onFocusPreviousBlock={onFocusPreviousBlock}
-            onMoveBlock={onMoveBlock}
-            onMutateBlock={onMutateBlock}
-            onSelectBlock={onSelectBlock}
-            pathname={pathname}
-            properties={properties}
-            selected={selectedBlock === blockId}
-            type={block['@type']}
-            manage={manage}
-            allowedBlocks={allowedBlocks}
-            formTitle={title}
-            formDescription={description}
-          />,
-        ),
-      )}
-    </div>
-  );
-
   return (
     <div className="ui container blocks-form" title={title}>
       <DragDropList
@@ -172,49 +127,39 @@ const BlocksForm = (props) => {
           // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
-        renderChild={(block, blockId, index, draginfo) =>
-          renderBlock ? (
-            renderBlock(block, blockId, index, draginfo)
-          ) : (
-            <BlockWrapper
-              key={blockId}
-              block={block}
-              blockId={blockId}
-              draginfo={draginfo}
-              selected={selectedBlock === blockId}
+      >
+        {(dragProps) => {
+          const { child, childId, index } = dragProps;
+          return children(
+            dragProps,
+            <EditBlock
+              block={childId}
+              key={childId}
+              id={childId}
+              data={child}
+              handleKeyDown={handleKeyDown}
+              index={index}
+              onAddBlock={onAddBlock}
+              onChangeBlock={onChangeBlock}
+              onChangeField={onChangeField}
               onDeleteBlock={onDeleteBlock}
+              onFocusNextBlock={onFocusNextBlock}
+              onFocusPreviousBlock={onFocusPreviousBlock}
+              onMoveBlock={onMoveBlock}
               onMutateBlock={onMutateBlock}
+              onSelectBlock={onSelectBlock}
+              pathname={pathname}
+              properties={properties}
+              selected={selectedBlock === childId}
+              type={child['@type']}
+              manage={manage}
               allowedBlocks={allowedBlocks}
-            >
-              <EditBlock
-                block={blockId}
-                data={block}
-                handleKeyDown={handleKeyDown}
-                id={blockId}
-                index={index}
-                key={blockId}
-                onAddBlock={onAddBlock}
-                onChangeBlock={onChangeBlock}
-                onChangeField={onChangeField}
-                onDeleteBlock={onDeleteBlock}
-                onFocusNextBlock={onFocusNextBlock}
-                onFocusPreviousBlock={onFocusPreviousBlock}
-                onMoveBlock={onMoveBlock}
-                onMutateBlock={onMutateBlock}
-                onSelectBlock={onSelectBlock}
-                pathname={pathname}
-                properties={properties}
-                selected={selectedBlock === blockId}
-                type={block['@type']}
-                manage={manage}
-                allowedBlocks={allowedBlocks}
-                formTitle={title}
-                formDescription={description}
-              />
-            </BlockWrapper>
-          )
-        }
-      />
+              formTitle={title}
+              formDescription={description}
+            />,
+          );
+        }}
+      </DragDropList>
     </div>
   );
 };
