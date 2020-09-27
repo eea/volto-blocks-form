@@ -15,17 +15,19 @@ import { settings } from '~/config';
 // import EditBlockWrapper from './EditBlockWrapper';
 
 const BlocksForm = (props) => {
+  // debugging code to check component reconciliation
   const mounted = React.useRef();
   React.useEffect(() => {
     if (!mounted.current) console.log('mount block form');
     mounted.current = true;
   });
+
   const {
     pathname,
     onChangeField,
     properties,
     onChangeFormData,
-    renderBlock,
+    // renderBlock,
     selectedBlock,
     onSelectBlock,
     allowedBlocks,
@@ -35,6 +37,7 @@ const BlocksForm = (props) => {
     children,
   } = props;
 
+  const editBlockWrapper = children;
   const blockList = getBlocks(properties);
 
   const handleKeyDown = (
@@ -130,33 +133,37 @@ const BlocksForm = (props) => {
       >
         {(dragProps) => {
           const { child, childId, index } = dragProps;
-          return children(
+          const blockProps = {
+            allowedBlocks,
+            block: childId,
+            data: child,
+            handleKeyDown,
+            id: childId,
+            index,
+            manage,
+            onAddBlock,
+            onChangeBlock,
+            onChangeField,
+            onDeleteBlock,
+            onFocusNextBlock,
+            onFocusPreviousBlock,
+            onMoveBlock,
+            onMutateBlock,
+            onSelectBlock,
+            pathname,
+            properties,
+            selected: selectedBlock === childId,
+            type: child['@type'],
+          };
+          return editBlockWrapper(
             dragProps,
             <EditBlock
-              block={childId}
               key={childId}
-              id={childId}
-              data={child}
-              handleKeyDown={handleKeyDown}
-              index={index}
-              onAddBlock={onAddBlock}
-              onChangeBlock={onChangeBlock}
-              onChangeField={onChangeField}
-              onDeleteBlock={onDeleteBlock}
-              onFocusNextBlock={onFocusNextBlock}
-              onFocusPreviousBlock={onFocusPreviousBlock}
-              onMoveBlock={onMoveBlock}
-              onMutateBlock={onMutateBlock}
-              onSelectBlock={onSelectBlock}
-              pathname={pathname}
-              properties={properties}
-              selected={selectedBlock === childId}
-              type={child['@type']}
-              manage={manage}
-              allowedBlocks={allowedBlocks}
+              {...blockProps}
               formTitle={title}
               formDescription={description}
             />,
+            blockProps,
           );
         }}
       </DragDropList>

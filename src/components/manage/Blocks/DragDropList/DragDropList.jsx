@@ -1,7 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-// import { v4 as uuid } from 'uuid';
 
 const DragDropList = (props) => {
   const { childList, children, onMoveItem } = props; //renderChild
