@@ -12,22 +12,27 @@ import {
   previousBlockId,
 } from '@eeacms/volto-blocks-form/helpers';
 import { settings } from '~/config';
-import EditBlockWrapper from './EditBlockWrapper';
+// import EditBlockWrapper from './EditBlockWrapper';
 
 const BlocksForm = (props) => {
+  const mounted = React.useRef();
+  React.useEffect(() => {
+    if (!mounted.current) console.log('mount block form');
+    mounted.current = true;
+  });
   const {
     pathname,
     onChangeField,
     properties,
     onChangeFormData,
     renderBlock,
-    blockWrapper,
     selectedBlock,
     onSelectBlock,
     allowedBlocks,
     title,
     description,
     manage,
+    children,
   } = props;
 
   const blockList = getBlocks(properties);
@@ -105,7 +110,49 @@ const BlocksForm = (props) => {
     onChangeFormData(newFormData);
   };
 
-  const BlockWrapper = blockWrapper ? blockWrapper : EditBlockWrapper;
+  return (
+    <div className="ui container blocks-form" title={title}>
+      {blockList.map(([blockId, block], index) =>
+        children(
+          {
+            block,
+            blockId,
+            draginfo: {},
+            selected: selectedBlock === blockId,
+            onMutateBlock,
+            onDeleteBlock,
+            allowedBlocks,
+          },
+
+          <EditBlock
+            block={blockId}
+            data={block}
+            handleKeyDown={handleKeyDown}
+            id={blockId}
+            index={index}
+            key={blockId}
+            onAddBlock={onAddBlock}
+            onChangeBlock={onChangeBlock}
+            onChangeField={onChangeField}
+            onDeleteBlock={onDeleteBlock}
+            onFocusNextBlock={onFocusNextBlock}
+            onFocusPreviousBlock={onFocusPreviousBlock}
+            onMoveBlock={onMoveBlock}
+            onMutateBlock={onMutateBlock}
+            onSelectBlock={onSelectBlock}
+            pathname={pathname}
+            properties={properties}
+            selected={selectedBlock === blockId}
+            type={block['@type']}
+            manage={manage}
+            allowedBlocks={allowedBlocks}
+            formTitle={title}
+            formDescription={description}
+          />,
+        ),
+      )}
+    </div>
+  );
 
   return (
     <div className="ui container blocks-form" title={title}>
@@ -130,6 +177,7 @@ const BlocksForm = (props) => {
             renderBlock(block, blockId, index, draginfo)
           ) : (
             <BlockWrapper
+              key={blockId}
               block={block}
               blockId={blockId}
               draginfo={draginfo}

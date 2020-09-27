@@ -1,6 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+// import { v4 as uuid } from 'uuid';
 
 const DragDropList = (props) => {
   const { childList, renderChild, onMoveItem } = props;
@@ -82,6 +83,7 @@ const DragDropList = (props) => {
     });
   }, []);
 
+  // console.log('render dragdrop');
   return (
     <DragDropContext
       onDragEnd={(result) => {

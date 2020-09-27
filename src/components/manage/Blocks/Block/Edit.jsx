@@ -70,8 +70,14 @@ export class Edit extends React.Component {
     }
     const tab = this.props.manage
       ? 1
-      : blocks.blocksConfig?.[type]?.sidebarBar || 0;
+      : blocks.blocksConfig?.[type]?.sidebarTab || 0;
     if (this.props.selected) {
+      console.log(
+        'mount set sidebar from block',
+        tab,
+        this.props.id,
+        this.props,
+      );
       this.props.setSidebarTab(tab);
     }
   }
@@ -121,6 +127,7 @@ export class Edit extends React.Component {
 
     return (
       <>
+        <div>{this.props.id}</div>
         {Block !== null ? (
           <div
             role="presentation"
