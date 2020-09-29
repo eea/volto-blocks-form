@@ -20,9 +20,10 @@ const RenderBlocks = (props) => {
   const { location, intl, content } = props;
   const blocksFieldname = getBlocksFieldname(content);
   const blocksLayoutFieldname = getBlocksLayoutFieldname(content);
+  const CustomTag = `${props.as || 'div'}`;
 
   return hasBlocksData(content) ? (
-    <div>
+    <CustomTag>
       {map(content[blocksLayoutFieldname].items, (block) => {
         const Block =
           blocks.blocksConfig[content[blocksFieldname]?.[block]?.['@type']]?.[
@@ -44,7 +45,7 @@ const RenderBlocks = (props) => {
           </div>
         );
       })}
-    </div>
+    </CustomTag>
   ) : (
     ''
   );
