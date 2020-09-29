@@ -1,10 +1,12 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { v4 as uuid } from 'uuid';
 
 const DragDropList = (props) => {
   const { childList, children, onMoveItem } = props; //renderChild
   const [placeholderProps, setPlaceholderProps] = React.useState({});
+  const [uid] = React.useState(uuid());
 
   const handleDragStart = React.useCallback((event) => {
     const queryAttr = 'data-rbd-draggable-id';
@@ -92,7 +94,7 @@ const DragDropList = (props) => {
       onDragStart={handleDragStart}
       onDragUpdate={onDragUpdate}
     >
-      <Droppable droppableId="edit-form">
+      <Droppable droppableId={uid}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -100,7 +102,11 @@ const DragDropList = (props) => {
             style={{ position: 'relative' }}
           >
             {childList.map(([childId, child], index) => (
-              <Draggable draggableId={childId} index={index} key={childId}>
+              <Draggable
+                draggableId={childId.toString()}
+                index={index}
+                key={childId}
+              >
                 {(draginfo) => children({ child, childId, index, draginfo })}
               </Draggable>
             ))}
