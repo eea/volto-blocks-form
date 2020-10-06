@@ -16,11 +16,10 @@ import { settings } from '~/config';
 
 const BlocksForm = (props) => {
   // debugging code to check component reconciliation
-  const mounted = React.useRef();
-  React.useEffect(() => {
-    if (!mounted.current) console.log('mount block form');
-    mounted.current = true;
-  });
+  // const mounted = React.useRef();
+  // React.useEffect(() => {
+  //   if (!mounted.current) mounted.current = true;
+  // });
 
   const {
     pathname,
