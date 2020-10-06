@@ -72,12 +72,12 @@ export class Edit extends React.Component {
       ? 1
       : blocks.blocksConfig?.[type]?.sidebarTab || 0;
     if (this.props.selected) {
-      console.log(
-        'mount set sidebar from block',
-        tab,
-        this.props.id,
-        this.props,
-      );
+      // console.log(
+      //   'mount set sidebar from block',
+      //   tab,
+      //   this.props.id,
+      //   this.props,
+      // );
       this.props.setSidebarTab(tab);
     }
   }
