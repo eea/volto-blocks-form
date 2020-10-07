@@ -21,14 +21,13 @@ const BlocksForm = (props) => {
     metadata,
     properties,
     onChangeFormData,
-    renderBlock,
-    blockWrapper,
     selectedBlock,
     onSelectBlock,
     allowedBlocks,
     title,
     description,
     manage,
+    children,
   } = props;
 
   const blockList = getBlocks(properties);
@@ -106,7 +105,13 @@ const BlocksForm = (props) => {
     onChangeFormData(newFormData);
   };
 
-  const BlockWrapper = blockWrapper ? blockWrapper : EditBlockWrapper;
+  const defaultBlockWrapper = ({ draginfo }, editBlock, blockProps) => (
+    <EditBlockWrapper draginfo={draginfo} blockProps={blockProps}>
+      {editBlock}
+    </EditBlockWrapper>
+  );
+
+  const editBlockWrapper = children || defaultBlockWrapper;
 
   return (
     <div className="ui container blocks-form" title={title}>
@@ -123,52 +128,46 @@ const BlocksForm = (props) => {
             destination.index,
           );
           onChangeFormData(newFormData);
-          // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
-        renderChild={(block, blockId, index, draginfo) =>
-          renderBlock ? (
-            renderBlock(block, blockId, index, draginfo)
-          ) : (
-            <BlockWrapper
-              block={block}
-              blockId={blockId}
-              draginfo={draginfo}
-              selected={selectedBlock === blockId}
-              onDeleteBlock={onDeleteBlock}
-              onMutateBlock={onMutateBlock}
-              allowedBlocks={allowedBlocks}
-            >
-              <EditBlock
-                block={blockId}
-                data={block}
-                handleKeyDown={handleKeyDown}
-                id={blockId}
-                index={index}
-                key={blockId}
-                onAddBlock={onAddBlock}
-                onChangeBlock={onChangeBlock}
-                onChangeField={onChangeField}
-                onDeleteBlock={onDeleteBlock}
-                onFocusNextBlock={onFocusNextBlock}
-                onFocusPreviousBlock={onFocusPreviousBlock}
-                onMoveBlock={onMoveBlock}
-                onMutateBlock={onMutateBlock}
-                onSelectBlock={onSelectBlock}
-                pathname={pathname}
-                metadata={metadata}
-                properties={properties}
-                selected={selectedBlock === blockId}
-                type={block['@type']}
-                manage={manage}
-                allowedBlocks={allowedBlocks}
-                formTitle={title}
-                formDescription={description}
-              />
-            </BlockWrapper>
-          )
-        }
-      />
+      >
+        {(dragProps) => {
+          const { child, childId, index } = dragProps;
+          const blockProps = {
+            allowedBlocks,
+            block: childId,
+            data: child,
+            handleKeyDown,
+            id: childId,
+            index,
+            manage,
+            onAddBlock,
+            onChangeBlock,
+            onChangeField,
+            onDeleteBlock,
+            onFocusNextBlock,
+            onFocusPreviousBlock,
+            onMoveBlock,
+            onMutateBlock,
+            onSelectBlock,
+            pathname,
+            metadata,
+            properties,
+            selected: selectedBlock === childId,
+            type: child['@type'],
+          };
+          return editBlockWrapper(
+            dragProps,
+            <EditBlock
+              key={childId}
+              {...blockProps}
+              formTitle={title}
+              formDescription={description}
+            />,
+            blockProps,
+          );
+        }}
+      </DragDropList>
     </div>
   );
 };

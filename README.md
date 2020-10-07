@@ -1,13 +1,21 @@
 # volto-blocks-form
 [![Releases](https://img.shields.io/github/v/release/eea/volto-blocks-form)](https://github.com/eea/volto-blocks-form/releases)
 
-[Volto](https://github.com/plone/volto) add-on
+[Volto](https://github.com/plone/volto) add-on: Reusable form components
 
-## Features
+## Components
 
-###
+- [BlocksForm](https://github.com/eea/volto-blocks-form/blob/master/src/components/manage/Blocks/Block/BlocksForm.jsx)
+- [DragDropList](https://github.com/eea/volto-blocks-form/blob/master/src/components/manage/Blocks/DragDropList/DragDropList.jsx)
+- [RenderBlocks](https://github.com/eea/volto-blocks-form/blob/master/src/components/theme/View/RenderBlocks.jsx)
+- [EditBlockWrapper](https://github.com/eea/volto-blocks-form/blob/master/src/components/manage/Blocks/Block/EditBlockWrapper.jsx)
 
-Demo GIF
+## Usage
+
+This package registers the above components. For usage examples see:
+
+* [volto-group-block](https://github.com/eea/volto-group-block)
+* [volto-columns-block](https://github.com/eea/volto-columns-block)
 
 ## Getting started
 
@@ -25,7 +33,7 @@ Demo GIF
     ],
 
     "dependencies": {
-        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.2.0"
+        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0"
     }
     ```
 
