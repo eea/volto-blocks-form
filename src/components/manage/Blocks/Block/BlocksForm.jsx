@@ -24,9 +24,9 @@ const BlocksForm = (props) => {
   const {
     pathname,
     onChangeField,
+    metadata,
     properties,
     onChangeFormData,
-    // renderBlock,
     selectedBlock,
     onSelectBlock,
     allowedBlocks,
@@ -158,6 +158,7 @@ const BlocksForm = (props) => {
             onMutateBlock,
             onSelectBlock,
             pathname,
+            metadata,
             properties,
             selected: selectedBlock === childId,
             type: child['@type'],
