@@ -12,7 +12,7 @@ import {
   previousBlockId,
 } from '@eeacms/volto-blocks-form/helpers';
 import { settings } from '~/config';
-// import EditBlockWrapper from './EditBlockWrapper';
+import EditBlockWrapper from './EditBlockWrapper';
 
 const BlocksForm = (props) => {
   // debugging code to check component reconciliation
@@ -36,7 +36,6 @@ const BlocksForm = (props) => {
     children,
   } = props;
 
-  const editBlockWrapper = children;
   const blockList = getBlocks(properties);
 
   const handleKeyDown = (
@@ -111,6 +110,15 @@ const BlocksForm = (props) => {
     const newFormData = moveBlock(properties, dragIndex, hoverIndex);
     onChangeFormData(newFormData);
   };
+
+  const defaultBlockWrapper = ({ draginfo }, editBlock, blockProps) => (
+    <EditBlockWrapper draginfo={draginfo} blockProps={blockProps}>
+      {editBlock}
+    </EditBlockWrapper>
+  );
+
+  const editBlockWrapper = children || defaultBlockWrapper;
+
   return (
     <div className="ui container blocks-form" title={title}>
       <DragDropList
