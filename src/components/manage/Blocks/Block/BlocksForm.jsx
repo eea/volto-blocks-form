@@ -15,12 +15,6 @@ import { settings } from '~/config';
 import EditBlockWrapper from './EditBlockWrapper';
 
 const BlocksForm = (props) => {
-  // debugging code to check component reconciliation
-  // const mounted = React.useRef();
-  // React.useEffect(() => {
-  //   if (!mounted.current) mounted.current = true;
-  // });
-
   const {
     pathname,
     onChangeField,
@@ -134,7 +128,6 @@ const BlocksForm = (props) => {
             destination.index,
           );
           onChangeFormData(newFormData);
-          // setState({ ...state, selected: selectPrev ? previous : null });
           return true;
         }}
       >
