@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 
 const DragDropList = (props) => {
-  const { childList, children, onMoveItem } = props; //renderChild
+  const { childList, children, onMoveItem, as = 'div' } = props; //renderChild
   const [placeholderProps, setPlaceholderProps] = React.useState({});
   const [uid] = React.useState(uuid());
 
@@ -84,7 +84,7 @@ const DragDropList = (props) => {
     });
   }, []);
 
-  // console.log('render dragdrop');
+  const AsDomComponent = as;
   return (
     <DragDropContext
       onDragEnd={(result) => {
@@ -96,7 +96,7 @@ const DragDropList = (props) => {
     >
       <Droppable droppableId={uid}>
         {(provided, snapshot) => (
-          <div
+          <AsDomComponent
             ref={provided.innerRef}
             {...provided.droppableProps}
             style={{ position: 'relative' }}
@@ -123,7 +123,7 @@ const DragDropList = (props) => {
                 }}
               />
             )}
-          </div>
+          </AsDomComponent>
         )}
       </Droppable>
     </DragDropContext>
