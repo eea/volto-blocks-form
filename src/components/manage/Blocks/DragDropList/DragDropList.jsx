@@ -101,15 +101,17 @@ const DragDropList = (props) => {
             {...provided.droppableProps}
             style={{ position: 'relative' }}
           >
-            {childList.map(([childId, child], index) => (
-              <Draggable
-                draggableId={childId.toString()}
-                index={index}
-                key={childId}
-              >
-                {(draginfo) => children({ child, childId, index, draginfo })}
-              </Draggable>
-            ))}
+            {childList
+              .filter(([id, child]) => id && child)
+              .map(([childId, child], index) => (
+                <Draggable
+                  draggableId={childId.toString()}
+                  index={index}
+                  key={childId}
+                >
+                  {(draginfo) => children({ child, childId, index, draginfo })}
+                </Draggable>
+              ))}
             {provided.placeholder}
             {!isEmpty(placeholderProps) && (
               <div
