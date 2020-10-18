@@ -102,7 +102,7 @@ const DragDropList = (props) => {
             style={{ position: 'relative' }}
           >
             {childList
-              .filter(([id, child]) => id && child)
+              .filter(([id, child]) => id && child) // beware numbers!
               .map(([childId, child], index) => (
                 <Draggable
                   draggableId={childId.toString()}
