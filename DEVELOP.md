@@ -4,30 +4,16 @@
 
 Before starting make sure your development environment is properly set. See [Volto Developer Documentation](https://docs.voltocms.com/getting-started/install/)
 
-1. Install `mrs.developer`
+1. Make sure you have installed `yo`, `@plone/generator-volto` and `mrs-developer`
 
-        $ npm install -g mrs.developer
-
-1. Install `@plone/create-volto-app`
-
-        $ npm install -g @plone/create-volto-app
+        $ npm install -g yo
+        $ npm install -g @plone/generator-volto
+        $ npm install -g mrs-developer
 
 1. Create new volto app
 
-        $ create-volto-app my-volto-project
+        $ yo @plone/volto my-volto-project --addon @eeacms/volto-blocks-form
         $ cd my-volto-project
-
-1. Update `package.json` with the following information:
-
-        {
-            "scripts": {
-                "develop": "missdev --config=jsconfig.json --output=addons"
-            },
-
-            "addons": [
-                "@eeacms/volto-blocks-form"
-            ],
-        }
 
 1. Add the following to `mrs.developer.json`:
 
@@ -47,7 +33,7 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1. Start backend
 
-        $ docker run -d --name plone -p 8080:8080 -e SITE=Plone -e VERSIONS="plone.restapi=7.0.0a5" -e ADDONS="kitconcept.volto" plone:5
+        $ docker run -d --name plone -p 8080:8080 -e SITE=Plone plone
 
     ...wait for backend to setup and start - `Ready to handle requests`:
 

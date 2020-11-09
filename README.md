@@ -21,19 +21,19 @@ This package registers the above components. For usage examples see:
 
 1. Create new volto project if you don't already have one:
     ```
-    $ npm install -g @plone/create-volto-app
-    $ create-volto-app my-volto-project
+    $ npm install -g yo @plone/generator-volto
+    $ yo @plone/volto my-volto-project --addon @eeacms/volto-blocks-form
     $ cd my-volto-project
     ```
 
-1. Update `package.json`:
-    ``` JSON
+1. If you already have a volto project, just update package.json:
+    ```
     "addons": [
         "@eeacms/volto-blocks-form"
     ],
 
     "dependencies": {
-        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0"
+        "@eeacms/volto-blocks-form": "^1.0.0"
     }
     ```
 
