@@ -1,4 +1,5 @@
 # volto-blocks-form
+
 [![Releases](https://img.shields.io/github/v/release/eea/volto-blocks-form)](https://github.com/eea/volto-blocks-form/releases)
 
 [Volto](https://github.com/plone/volto) add-on: Reusable form components
@@ -14,34 +15,37 @@
 
 This package registers the above components. For usage examples see:
 
-* [volto-group-block](https://github.com/eea/volto-group-block)
-* [volto-columns-block](https://github.com/eea/volto-columns-block)
+- [volto-group-block](https://github.com/eea/volto-group-block)
+- [volto-columns-block](https://github.com/eea/volto-columns-block)
 
 ## Getting started
 
 1. Create new volto project if you don't already have one:
-    ```
-    $ npm install -g yo @plone/generator-volto
-    $ yo @plone/volto my-volto-project --addon @eeacms/volto-blocks-form
-    $ cd my-volto-project
-    ```
+
+   ```
+   $ npm install -g yo @plone/generator-volto
+   $ yo @plone/volto my-volto-project --addon @eeacms/volto-blocks-form
+   $ cd my-volto-project
+   ```
 
 1. If you already have a volto project, just update package.json:
-    ```
-    "addons": [
-        "@eeacms/volto-blocks-form"
-    ],
 
-    "dependencies": {
-        "@eeacms/volto-blocks-form": "^1.0.0"
-    }
-    ```
+   ```
+   "addons": [
+       "@eeacms/volto-blocks-form"
+   ],
+
+   "dependencies": {
+       "@eeacms/volto-blocks-form": "^1.0.0"
+   }
+   ```
 
 1. Install new add-ons and restart Volto:
-    ```
-    $ yarn
-    $ yarn start
-    ```
+
+   ```
+   $ yarn
+   $ yarn start
+   ```
 
 1. Go to http://localhost:3000
 
