@@ -10,7 +10,7 @@
   },
   "scripts": {
     "release": "release-it",
-    "bootstrap": "./bootstrap"
+    "bootstrap": "node bootstrap"
   },
   "homepage": "https://github.com/eea/volto-blocks-form",
   "keywords": [
