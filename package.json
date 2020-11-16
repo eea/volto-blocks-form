@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-blocks-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "volto-blocks-form: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -18,8 +18,7 @@
     "type": "git",
     "url": "git@github.com:eea/volto-blocks-form.git"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "release": "release-it",
     "bootstrap": "node bootstrap",
