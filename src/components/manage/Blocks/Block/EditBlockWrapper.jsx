@@ -19,7 +19,7 @@ const messages = defineMessages({
 
 const EditBlockWrapper = (props) => {
   const { intl, blockProps, draginfo, children } = props;
-  const { block, selected, blockId, type, onDeleteBlock } = blockProps;
+  const { block, selected, type, onDeleteBlock } = blockProps;
   const visible = selected && blockHasValue(block) && !block.fixed;
 
   const required = isBoolean(block.required)
@@ -49,7 +49,7 @@ const EditBlockWrapper = (props) => {
           <Button
             icon
             basic
-            onClick={() => onDeleteBlock(blockId)}
+            onClick={() => onDeleteBlock(block)}
             className="delete-button"
             aria-label={intl.formatMessage(messages.delete)}
           >
