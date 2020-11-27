@@ -19,18 +19,18 @@ const messages = defineMessages({
 
 const EditBlockWrapper = (props) => {
   const { intl, blockProps, draginfo, children } = props;
-  const { block, selected, type, onDeleteBlock } = blockProps;
-  const visible = selected && blockHasValue(block) && !block.fixed;
+  const { block, selected, type, onDeleteBlock, data } = blockProps;
+  const visible = selected && blockHasValue(data) && !data?.fixed;
 
-  const required = isBoolean(block.required)
-    ? block.required
+  const required = isBoolean(data.required)
+    ? data.required
     : includes(blocks.requiredBlocks, type);
 
   return (
     <div
       ref={draginfo.innerRef}
       {...draginfo.draggableProps}
-      className={`block-editor-${block['@type']}`}
+      className={`block-editor-${data['@type']}`}
     >
       <div style={{ position: 'relative' }}>
         <div
