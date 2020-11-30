@@ -18,7 +18,9 @@
     "type": "git",
     "url": "git@github.com:eea/volto-blocks-form.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-beautiful-dnd": "13.0.0"
+  },
   "scripts": {
     "release": "release-it",
     "bootstrap": "node bootstrap",
