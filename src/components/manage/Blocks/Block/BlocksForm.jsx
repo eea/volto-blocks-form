@@ -114,7 +114,7 @@ const BlocksForm = (props) => {
   const editBlockWrapper = children || defaultBlockWrapper;
 
   return (
-    <div className="ui container blocks-form" title={title}>
+    <div className="blocks-form" title={title}>
       <DragDropList
         childList={blockList}
         onMoveItem={(result) => {
