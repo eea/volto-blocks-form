@@ -15,7 +15,7 @@ import {
   BlockSettingsSidebar,
   BlockSettingsSchema,
 } from '@plone/volto/components';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   unknownBlock: {
@@ -60,7 +60,8 @@ export class Edit extends React.Component {
   componentDidMount() {
     const { type } = this.props;
     const blockHasOwnFocusManagement =
-      blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] || null;
+      config.blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] ||
+      null;
     if (
       !blockHasOwnFocusManagement &&
       this.props.selected &&
@@ -70,7 +71,7 @@ export class Edit extends React.Component {
     }
     const tab = this.props.manage
       ? 1
-      : blocks.blocksConfig?.[type]?.sidebarTab || 0;
+      : config.blocks.blocksConfig?.[type]?.sidebarTab || 0;
     if (this.props.selected) {
       this.props.setSidebarTab(tab);
     }
@@ -79,7 +80,8 @@ export class Edit extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { selected, type } = this.props;
     const blockHasOwnFocusManagement =
-      blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] || null;
+      config.blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] ||
+      null;
     if (
       !blockHasOwnFocusManagement &&
       nextProps.selected &&
@@ -94,7 +96,7 @@ export class Edit extends React.Component {
     ) {
       const tab = this.props.manage
         ? 1
-        : blocks.blocksConfig?.[nextProps.type]?.sidebarTab || 0;
+        : config.blocks.blocksConfig?.[nextProps.type]?.sidebarTab || 0;
       this.props.setSidebarTab(tab);
     }
   }
@@ -110,14 +112,15 @@ export class Edit extends React.Component {
     const { type, intl } = this.props;
     const disableNewBlocks = this.props.data?.disableNewBlocks;
 
-    let Block = blocks.blocksConfig?.[type]?.['edit'] || null;
+    let Block = config.blocks.blocksConfig?.[type]?.['edit'] || null;
     if (this.props.data?.readOnly) {
-      Block = blocks.blocksConfig?.[type]?.['view'] || null;
+      Block = config.blocks.blocksConfig?.[type]?.['view'] || null;
     }
     const schema =
-      blocks.blocksConfig?.[type]?.['schema'] || BlockSettingsSchema;
+      config.blocks.blocksConfig?.[type]?.['schema'] || BlockSettingsSchema;
     const blockHasOwnFocusManagement =
-      blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] || null;
+      config.blocks.blocksConfig?.[type]?.['blockHasOwnFocusManagement'] ||
+      null;
 
     return Block !== null ? (
       <div
