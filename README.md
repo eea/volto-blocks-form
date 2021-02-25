@@ -37,7 +37,7 @@ This package registers the above components. For usage examples see:
    ],
 
    "dependencies": {
-       "@eeacms/volto-blocks-form": "^1.0.0"
+       "@eeacms/volto-blocks-form": "^2.0.0"
    }
    ```
 

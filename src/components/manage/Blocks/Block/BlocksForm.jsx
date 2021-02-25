@@ -11,7 +11,7 @@ import {
   nextBlockId,
   previousBlockId,
 } from '@eeacms/volto-blocks-form/helpers';
-import { settings } from '~/config';
+import config from '@plone/volto/registry';
 import EditBlockWrapper from './EditBlockWrapper';
 
 const BlocksForm = (props) => {
@@ -52,7 +52,7 @@ const BlocksForm = (props) => {
       e.preventDefault();
     }
     if (e.key === 'Enter' && !disableEnter) {
-      onAddBlock(settings.defaultBlockType, index + 1);
+      onAddBlock(config.settings.defaultBlockType, index + 1);
       e.preventDefault();
     }
   };

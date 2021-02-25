@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '@plone/volto/components';
 import { blockHasValue } from '@plone/volto/helpers';
 import dragSVG from '@plone/volto/icons/drag.svg';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { Button } from 'semantic-ui-react';
 import includes from 'lodash/includes';
 import isBoolean from 'lodash/isBoolean';
@@ -24,7 +24,7 @@ const EditBlockWrapper = (props) => {
 
   const required = isBoolean(data.required)
     ? data.required
-    : includes(blocks.requiredBlocks, type);
+    : includes(config.blocks.requiredBlocks, type);
 
   return (
     <div

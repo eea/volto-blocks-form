@@ -14,7 +14,7 @@ import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import { defineMessages, injectIntl } from 'react-intl';
 import { includes, isEqual } from 'lodash';
 import { filterEditorState } from 'draftjs-filters';
-import { settings } from '~/config';
+import config from '@plone/volto/registry';
 
 import { Icon, BlockChooser } from '@plone/volto/components';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
@@ -84,7 +84,7 @@ class Edit extends Component {
       }
 
       const inlineToolbarPlugin = createInlineToolbarPlugin({
-        structure: settings.richTextEditorInlineToolbarButtons,
+        structure: config.settings.richTextEditorInlineToolbarButtons,
       });
 
       this.state = {
@@ -217,11 +217,11 @@ class Edit extends Component {
           editorState={this.state.editorState}
           plugins={[
             this.state.inlineToolbarPlugin,
-            ...settings.richTextEditorPlugins,
+            ...config.settings.richTextEditorPlugins,
           ]}
-          blockRenderMap={settings.extendedBlockRenderMap}
-          blockStyleFn={settings.blockStyleFn}
-          customStyleMap={settings.customStyleMap}
+          blockRenderMap={config.settings.extendedBlockRenderMap}
+          blockStyleFn={config.settings.blockStyleFn}
+          customStyleMap={config.settings.customStyleMap}
           placeholder={placeholder}
           handleReturn={(e) => {
             if (isSoftNewlineEvent(e)) {
@@ -238,7 +238,7 @@ class Edit extends Component {
                 anchorKey,
               );
               const blockType = currentContentBlock.getType();
-              if (!includes(settings.listBlockTypes, blockType)) {
+              if (!includes(config.settings.listBlockTypes, blockType)) {
                 this.props.onSelectBlock(
                   this.props.onAddBlock('text', this.props.index + 1),
                 );
